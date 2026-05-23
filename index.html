@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Premium Neumorphic Calculator</title>
+  <!-- Google Fonts for sleek premium typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="light-theme">
+
+  <!-- Animated Floating Glassmorphic Blobs -->
+  <div class="blob-container">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <!-- Main Calculator Card Wrapper -->
+  <div class="calc-wrapper">
+    <div class="calc-container" id="calculator">
+      
+      <!-- Top Utility Header -->
+      <div class="calc-header">
+        <button class="icon-btn" id="history-toggle" title="View History">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </button>
+        <span class="brand-name">NEUMORPH</span>
+        <button class="icon-btn" id="sound-toggle" title="Toggle Click Sound">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sound-on-icon"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sound-off-icon hidden"><line x1="1" y1="1" x2="23" y2="23"/><path d="M9 9v6H5v-6h4zm7 3v-3a3 3 0 0 0-3-3h-2M11 5L6 9H2v6h4l5 4V5z"/></svg>
+        </button>
+      </div>
+
+      <!-- Recessed Screen Display -->
+      <div class="calc-display-recess">
+        <div class="calc-display">
+          <div class="formula-line" id="formula-display"></div>
+          <div class="result-line" id="result-display">0</div>
+        </div>
+      </div>
+
+      <!-- Main Button Keypad Grid -->
+      <div class="calc-keypad" id="keypad">
+        <!-- Row 1 -->
+        <button class="key action-key" data-key="Escape">clr</button>
+        <button class="key action-key" data-key="Backspace">DEL</button>
+        <button class="key action-key" data-key="%">%</button>
+        <button class="key op-key" data-key="/">/</button>
+
+        <!-- Row 2 -->
+        <button class="key num-key" data-key="7">7</button>
+        <button class="key num-key" data-key="8">8</button>
+        <button class="key num-key" data-key="9">9</button>
+        <button class="key op-key" data-key="*">*</button>
+
+        <!-- Row 3 -->
+        <button class="key num-key" data-key="4">4</button>
+        <button class="key num-key" data-key="5">5</button>
+        <button class="key num-key" data-key="6">6</button>
+        <button class="key op-key" data-key="-">-</button>
+
+        <!-- Row 4 -->
+        <button class="key num-key" data-key="1">1</button>
+        <button class="key num-key" data-key="2">2</button>
+        <button class="key num-key" data-key="3">3</button>
+        <button class="key op-key" data-key="+">+</button>
+
+        <!-- Row 5 -->
+        <button class="key decimal-key" data-key=".">.</button>
+        <button class="key num-key" data-key="0">0</button>
+        <button class="key equal-key" data-key="=">=</button>
+      </div>
+
+      <!-- Scientific Panel (Toggled by expand button) -->
+      <div class="calc-scientific hidden" id="scientific-panel">
+        <div class="sci-grid">
+          <button class="key sci-key" data-key="sin">sin</button>
+          <button class="key sci-key" data-key="cos">cos</button>
+          <button class="key sci-key" data-key="tan">tan</button>
+          <button class="key sci-key" data-key="log">log</button>
+          <button class="key sci-key" data-key="ln">ln</button>
+          <button class="key sci-key" data-key="sqrt">√</button>
+          <button class="key sci-key" data-key="pow">xʸ</button>
+          <button class="key sci-key" data-key="pi">π</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Floating UI Control Buttons (Overlayed exactly matching screenshot style) -->
+    <div class="floating-controls">
+      <!-- scientific expand toggle -->
+      <button class="floating-btn" id="expand-toggle" title="Toggle Scientific Mode">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 3 21 3 21 9" />
+          <polyline points="9 21 3 21 3 15" />
+          <line x1="21" y1="3" x2="14" y2="10" />
+          <line x1="3" y1="21" x2="10" y2="14" />
+        </svg>
+      </button>
+      
+      <!-- theme toggle (cleans view / switches theme) -->
+      <button class="floating-btn" id="theme-toggle" title="Switch Theme">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <!-- Sparkly search icon / custom magic lens theme icon -->
+          <circle cx="11" cy="11" r="8"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          <path d="M11 8v6M8 11h6"/>
+          <!-- Little sparkles -->
+          <path d="M19 5l.5-1 .5 1 1 .5-1 .5-.5 1-.5-1-1-.5zm-14 3l.25-.5.25.5.5.25-.5.25-.25.5-.25-.5-.5-.25z" fill="currentColor"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Sliding History Drawer -->
+    <div class="history-drawer" id="history-drawer">
+      <div class="drawer-header">
+        <h3>Calculation History</h3>
+        <button class="close-btn" id="history-close">&times;</button>
+      </div>
+      <div class="drawer-content" id="history-list">
+        <p class="empty-msg">No calculation history yet.</p>
+      </div>
+      <div class="drawer-footer">
+        <button class="clear-history-btn" id="clear-history">Clear All</button>
+      </div>
+    </div>
+
+    <!-- Drawer Overlay -->
+    <div class="drawer-overlay" id="drawer-overlay"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

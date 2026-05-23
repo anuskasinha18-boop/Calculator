@@ -1,0 +1,715 @@
+/* -------------------------------------------------------------
+ * PREMIUM NEUMORPHIC CALCULATOR STYLE SHEET
+ * Includes responsive layout, smooth transitions, float animations,
+ * and dual themes (Lilac Light & Obsidian Dark).
+ * ------------------------------------------------------------- */
+
+/* Font Families */
+:root {
+  --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  /* LILAC LIGHT THEME (Default) */
+  --bg-page: #e8d3ff;
+  --bg-gradient: linear-gradient(135deg, #e8d3ff 0%, #ecd2fc 40%, #dcd6f7 100%);
+  --calc-bg: #f3f5f8;
+  
+  --calc-shadow-dark: rgba(163, 177, 198, 0.45);
+  --calc-shadow-light: rgba(255, 255, 255, 0.85);
+  
+  --display-bg: #eaeff5;
+  --display-shadow-dark: rgba(165, 179, 201, 0.6);
+  --display-shadow-light: rgba(255, 255, 255, 0.9);
+  
+  --text-main: #3d4a5c;
+  --text-sub: #8b9bb4;
+  --text-op: #4a90e2; /* Clear accent for operational keys */
+  
+  --key-bg: #f3f5f8;
+  --key-shadow-dark: rgba(163, 177, 198, 0.5);
+  --key-shadow-light: rgba(255, 255, 255, 0.9);
+  --key-border: rgba(255, 255, 255, 0.5);
+  
+  --equal-bg: #dbb0c3; /* Dusty pink/rose from reference image */
+  --equal-text: #594451;
+  --equal-shadow-dark: rgba(160, 110, 130, 0.4);
+  --equal-shadow-light: rgba(255, 255, 255, 0.4);
+  
+  --floating-bg: rgba(243, 245, 248, 0.95);
+  --floating-shadow: rgba(0, 0, 0, 0.08);
+  --overlay-bg: rgba(0, 0, 0, 0.25);
+  
+  --transition-speed: 0.3s;
+  --transition-bounce: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* OBSIDIAN DARK THEME */
+body.dark-theme {
+  --bg-page: #100f16;
+  --bg-gradient: linear-gradient(135deg, #100f16 0%, #15131f 60%, #0d0c12 100%);
+  --calc-bg: #1c1a27;
+  
+  --calc-shadow-dark: rgba(0, 0, 0, 0.6);
+  --calc-shadow-light: rgba(43, 40, 60, 0.4);
+  
+  --display-bg: #14121d;
+  --display-shadow-dark: rgba(0, 0, 0, 0.7);
+  --display-shadow-light: rgba(45, 42, 63, 0.3);
+  
+  --text-main: #e2e1e9;
+  --text-sub: #6e6b82;
+  --text-op: #ff9f43; /* Warm neon operator text in dark mode */
+  
+  --key-bg: #1c1a27;
+  --key-shadow-dark: rgba(0, 0, 0, 0.55);
+  --key-shadow-light: rgba(43, 40, 60, 0.35);
+  --key-border: rgba(255, 255, 255, 0.02);
+  
+  --equal-bg: #a8728d; /* Deep dusk rose for dark mode */
+  --equal-text: #ffffff;
+  --equal-shadow-dark: rgba(0, 0, 0, 0.5);
+  --equal-shadow-light: rgba(255, 255, 255, 0.1);
+  
+  --floating-bg: rgba(28, 26, 39, 0.95);
+  --floating-shadow: rgba(0, 0, 0, 0.4);
+  --overlay-bg: rgba(0, 0, 0, 0.55);
+}
+
+/* Reset and Globals */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--bg-gradient);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  transition: background var(--transition-speed) ease;
+  position: relative;
+}
+
+/* -------------------------------------------------------------
+ * BACKGROUND FLOATING BLOBS (Glassmorphism design element)
+ * ------------------------------------------------------------- */
+.blob-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.55;
+  animation: float 25s infinite alternate ease-in-out;
+  transition: opacity var(--transition-speed) ease;
+}
+
+.light-theme .blob {
+  opacity: 0.55;
+}
+
+.dark-theme .blob {
+  opacity: 0.15; /* Subtler in dark mode to prevent visual clutter */
+}
+
+.blob-1 {
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, #f3d5ff 0%, #d8b4f8 100%);
+  top: -100px;
+  left: -50px;
+  animation-duration: 20s;
+}
+
+.blob-2 {
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, #ffdee9 0%, #b5fffc 100%);
+  bottom: -150px;
+  right: -100px;
+  animation-duration: 28s;
+  animation-delay: -5s;
+}
+
+.blob-3 {
+  width: 280px;
+  height: 280px;
+  background: radial-gradient(circle, #e0c3fc 0%, #8ec5fc 100%);
+  top: 40%;
+  right: 15%;
+  animation-duration: 24s;
+  animation-delay: -10s;
+}
+
+@keyframes float {
+  0% {
+    transform: translate(0px, 0px) rotate(0deg) scale(1);
+  }
+  50% {
+    transform: translate(40px, -60px) rotate(180deg) scale(1.15);
+  }
+  100% {
+    transform: translate(-30px, 40px) rotate(360deg) scale(0.9);
+  }
+}
+
+/* -------------------------------------------------------------
+ * WRAPPER & CONTAINER LAYOUT
+ * ------------------------------------------------------------- */
+.calc-wrapper {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 1000px;
+}
+
+.calc-container {
+  background: var(--calc-bg);
+  width: 360px;
+  border-radius: 40px;
+  padding: 30px;
+  border: 1px solid var(--key-border);
+  box-shadow: 
+    15px 15px 35px var(--calc-shadow-dark),
+    -15px -15px 35px var(--calc-shadow-light);
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  transition: 
+    background var(--transition-speed) ease,
+    box-shadow var(--transition-speed) ease,
+    border var(--transition-speed) ease,
+    transform 0.4s var(--transition-bounce);
+  transform-style: preserve-3d;
+}
+
+/* Hover rotation tilt effect (Premium feel) */
+.calc-container:hover {
+  transform: translateY(-5px);
+}
+
+/* -------------------------------------------------------------
+ * HEADER
+ * ------------------------------------------------------------- */
+.calc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 5px;
+}
+
+.brand-name {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: var(--text-sub);
+  text-transform: uppercase;
+  transition: color var(--transition-speed) ease;
+}
+
+.icon-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-sub);
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 
+    color 0.2s ease, 
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+  outline: none;
+}
+
+.icon-btn:hover {
+  color: var(--text-main);
+  background-color: var(--display-bg);
+  box-shadow: 
+    inset 2px 2px 5px var(--display-shadow-dark),
+    inset -2px -2px 5px var(--display-shadow-light);
+}
+
+.icon-btn:active {
+  transform: scale(0.92);
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* -------------------------------------------------------------
+ * RECESSED SCREEN DISPLAY
+ * ------------------------------------------------------------- */
+.calc-display-recess {
+  background: var(--display-bg);
+  border-radius: 28px;
+  padding: 5px;
+  box-shadow: 
+    inset 6px 6px 12px var(--display-shadow-dark),
+    inset -6px -6px 12px var(--display-shadow-light);
+  transition: 
+    background var(--transition-speed) ease,
+    box-shadow var(--transition-speed) ease;
+}
+
+.calc-display {
+  padding: 25px 22px;
+  min-height: 105px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  gap: 8px;
+  overflow: hidden;
+  text-align: right;
+  word-break: break-all;
+}
+
+.formula-line {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--text-sub);
+  min-height: 20px;
+  letter-spacing: -0.5px;
+  opacity: 0.85;
+  transition: color var(--transition-speed) ease;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+.result-line {
+  font-family: var(--font-sans);
+  font-size: 44px;
+  font-weight: 300;
+  color: var(--text-main);
+  line-height: 1;
+  letter-spacing: -1.5px;
+  transition: color var(--transition-speed) ease, font-size 0.15s ease;
+  width: 100%;
+}
+
+/* Auto-scale display font for long expressions */
+.result-line.medium-text {
+  font-size: 32px;
+}
+.result-line.small-text {
+  font-size: 22px;
+}
+
+/* -------------------------------------------------------------
+ * BUTTON KEYPAD GRID
+ * ------------------------------------------------------------- */
+.calc-keypad {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.key {
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1px solid var(--key-border);
+  background: var(--key-bg);
+  font-family: var(--font-sans);
+  font-size: 19px;
+  font-weight: 400;
+  color: var(--text-main);
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: none;
+  box-shadow: 
+    5px 5px 11px var(--key-shadow-dark),
+    -5px -5px 11px var(--key-shadow-light);
+  transition: 
+    background var(--transition-speed) ease,
+    box-shadow 0.15s ease,
+    transform 0.15s ease,
+    color var(--transition-speed) ease,
+    border var(--transition-speed) ease;
+}
+
+/* Key Hover State */
+.key:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    6px 6px 14px var(--key-shadow-dark),
+    -6px -6px 14px var(--key-shadow-light);
+}
+
+/* Key Active / Pressed Neumorphic State */
+.key:active,
+.key.pressed {
+  transform: translateY(1px) scale(0.96);
+  box-shadow: 
+    inset 3px 3px 6px var(--key-shadow-dark),
+    inset -3px -3px 6px var(--key-shadow-light);
+}
+
+/* Action Keys (clr, DEL, %) */
+.action-key {
+  font-weight: 400;
+  font-size: 16px;
+  color: var(--text-sub);
+}
+.action-key:hover {
+  color: var(--text-main);
+}
+
+/* Operator Keys (/, *, -, +) */
+.op-key {
+  font-weight: 500;
+  font-size: 21px;
+  color: var(--text-op);
+}
+
+/* Decimal Key */
+.decimal-key {
+  font-weight: 600;
+}
+
+/* Pill-shaped Equal Button (=) - spans 2 columns */
+.equal-key {
+  grid-column: span 2;
+  aspect-ratio: auto;
+  height: 100%;
+  border-radius: 30px; /* Capsule pill-shape */
+  background: var(--equal-bg);
+  color: var(--equal-text);
+  font-size: 24px;
+  font-weight: 500;
+  box-shadow: 
+    5px 5px 12px var(--equal-shadow-dark),
+    -5px -5px 12px var(--equal-shadow-light);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.equal-key:hover {
+  background: var(--equal-bg);
+  opacity: 0.95;
+  box-shadow: 
+    6px 6px 15px var(--equal-shadow-dark),
+    -6px -6px 15px var(--equal-shadow-light);
+}
+
+.equal-key:active,
+.equal-key.pressed {
+  box-shadow: 
+    inset 3px 3px 8px var(--equal-shadow-dark),
+    inset -3px -3px 8px var(--equal-shadow-light);
+  transform: translateY(1px) scale(0.97);
+}
+
+/* -------------------------------------------------------------
+ * SCIENTIFIC PANEL
+ * ------------------------------------------------------------- */
+.calc-scientific {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: 
+    max-height 0.4s var(--transition-bounce),
+    opacity 0.3s ease,
+    margin-top 0.4s var(--transition-bounce);
+  margin-top: 0;
+}
+
+.calc-scientific.active {
+  max-height: 150px;
+  opacity: 1;
+  margin-top: 10px;
+}
+
+.sci-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.sci-key {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-sub);
+  aspect-ratio: 1.8;
+  border-radius: 14px;
+}
+.sci-key:hover {
+  color: var(--text-main);
+}
+
+/* -------------------------------------------------------------
+ * FLOATING OVERLAY ACTION BUTTONS
+ * ------------------------------------------------------------- */
+.floating-controls {
+  position: absolute;
+  right: -25px;
+  bottom: 0px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  z-index: 20;
+}
+
+.floating-btn {
+  width: 50px;
+  height: 50px;
+  border-radius: 16px;
+  border: 1px solid var(--key-border);
+  background: var(--floating-bg);
+  color: var(--text-main);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 8px 8px 18px var(--floating-shadow);
+  transition: 
+    transform 0.25s var(--transition-bounce), 
+    background var(--transition-speed) ease, 
+    color var(--transition-speed) ease,
+    box-shadow 0.2s ease,
+    border var(--transition-speed) ease;
+  outline: none;
+}
+
+.floating-btn:hover {
+  transform: scale(1.1) rotate(5deg);
+  color: var(--text-op);
+}
+
+.floating-btn:active {
+  transform: scale(0.95);
+}
+
+/* -------------------------------------------------------------
+ * SLIDING HISTORY DRAWER
+ * ------------------------------------------------------------- */
+.history-drawer {
+  position: fixed;
+  top: 0;
+  left: -380px; /* Start hidden on left */
+  width: 340px;
+  height: 100%;
+  background: var(--floating-bg);
+  box-shadow: 10px 0 30px var(--floating-shadow);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  transition: left 0.4s var(--transition-bounce), background var(--transition-speed) ease;
+}
+
+.history-drawer.active {
+  left: 0;
+}
+
+.drawer-header {
+  padding: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--key-border);
+}
+
+.drawer-header h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  font-size: 28px;
+  font-weight: 300;
+  color: var(--text-sub);
+  cursor: pointer;
+  line-height: 1;
+}
+.close-btn:hover {
+  color: var(--text-main);
+}
+
+.drawer-content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Scrollbar styling for history drawer */
+.drawer-content::-webkit-scrollbar {
+  width: 6px;
+}
+.drawer-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+.drawer-content::-webkit-scrollbar-thumb {
+  background: var(--key-shadow-dark);
+  border-radius: 3px;
+}
+
+.empty-msg {
+  text-align: center;
+  color: var(--text-sub);
+  margin-top: 40px;
+  font-size: 14px;
+}
+
+.history-item {
+  padding: 12px 15px;
+  background: var(--display-bg);
+  border-radius: 16px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border: 1px solid var(--key-border);
+  box-shadow: 
+    3px 3px 6px var(--key-shadow-dark),
+    -3px -3px 6px var(--key-shadow-light);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.history-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    4px 4px 8px var(--key-shadow-dark),
+    -4px -4px 8px var(--key-shadow-light);
+}
+
+.history-item-formula {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-sub);
+  text-align: right;
+  word-break: break-all;
+}
+
+.history-item-result {
+  font-family: var(--font-sans);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-main);
+  text-align: right;
+  word-break: break-all;
+}
+
+.drawer-footer {
+  padding: 20px;
+  border-top: 1px solid var(--key-border);
+}
+
+.clear-history-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 16px;
+  border: 1px solid var(--key-border);
+  background: var(--key-bg);
+  color: var(--text-sub);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 
+    4px 4px 8px var(--key-shadow-dark),
+    -4px -4px 8px var(--key-shadow-light);
+  transition: all 0.2s ease;
+}
+
+.clear-history-btn:hover {
+  color: var(--text-main);
+  transform: translateY(-1px);
+}
+
+.clear-history-btn:active {
+  box-shadow: 
+    inset 2px 2px 5px var(--key-shadow-dark),
+    inset -2px -2px 5px var(--key-shadow-light);
+  transform: translateY(1px);
+}
+
+/* Drawer overlay backdrop */
+.drawer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--overlay-bg);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 90;
+  transition: opacity 0.3s ease;
+}
+
+.drawer-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* -------------------------------------------------------------
+ * RESPONSIVENESS AND TWEAKS FOR MOBILES
+ * ------------------------------------------------------------- */
+@media (max-width: 480px) {
+  body {
+    padding: 15px;
+  }
+  
+  .calc-container {
+    width: 100%;
+    max-width: 340px;
+    padding: 24px;
+    gap: 20px;
+  }
+  
+  .floating-controls {
+    right: 15px;
+    bottom: -65px;
+    flex-direction: row;
+  }
+  
+  .floating-btn {
+    width: 45px;
+    height: 45px;
+    border-radius: 12px;
+  }
+
+  .calc-keypad {
+    gap: 12px;
+  }
+
+  .key {
+    font-size: 18px;
+  }
+
+  .history-drawer {
+    width: 100%;
+    left: -100%;
+  }
+}
